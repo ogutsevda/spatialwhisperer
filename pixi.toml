@@ -2,14 +2,17 @@
 authors = ["Moritz Schaefer <mail@moritzs.de>"]
 channels = ["conda-forge", "pytorch", "bioconda", "nodefaults"]
 name = "spatialwhisperer-paper"
-platforms = ["linux-aarch64", "linux-64", "osx-arm64"]
+platforms = [
+    "linux-aarch64",
+    { platform = "linux-64", cuda = "12.4" },
+    "osx-arm64",
+]
 version = "0.1.0"
 
 
 [target.linux-64.dependencies]
-pytorch = {version = ">=2.7", channel = "pytorch"}
-torchvision = {version = ">=0.22", channel = "pytorch"}
-pytorch-cuda = {version = "12.*", channel = "pytorch"}
+pytorch = { version = "==2.7.1", build = "cuda126_mkl_py310_h5ee0071_300", channel = "conda-forge" }
+torchvision = { version = "==0.22.0", build = "cuda126_py310_hc8e71c5_0", channel = "conda-forge" }
 
 [dependencies]
 gfortran = "*"
@@ -42,6 +45,8 @@ pynndescent = ">=0.5.11"
 biopython = ">=1.83"
 httpcore = ">=1.0.7"
 accelerate = ">=1.12.0"
+tifffile = ">=2025.5.10,<2026"
+zarr = ">=2.18.3,<3"
 
 
 [pypi-dependencies]
@@ -75,6 +80,7 @@ scIB = ">=1.1.5"
 uni = { git = "https://github.com/mahmoodlab/UNI.git", rev = "42715efc11722a496e0a67f3369505a8f277206c" }
 spatialwhisperer = { path = ".", editable = true }
 conch = { git = "https://github.com/mahmoodlab/CONCH" }
+lmdb = ">=2.3.0, <3"
 # HEST (mahmoodlab/HEST) requires Python>=3.11 but cellwhisperer is pinned to
 # 3.10; install manually with `pip install git+https://github.com/mahmoodlab/HEST.git@<rev>`
 # inside a separate env if running the HEST benchmark scripts.
